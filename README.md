@@ -17,10 +17,17 @@ A machine learning project that recognizes handwritten digits using a trained de
 
 # 🛠️ Tech Stack
 
-- **Python**
-- **TensorFlow / Keras**
-- **NumPy**
-- **Matplotlib**
+- Python: Core programming language.
+
+- PyTorch: Deep learning framework used for the CNN architecture.
+
+- Torchvision: Used for loading the MNIST dataset and image transformations.
+
+- NumPy: Used for matrix operations and data manipulation.
+
+- Matplotlib: Used for visualizing model predictions and performance.
+
+- Streamlit: Framework used for the web-based deployment.
 
 ---
 
