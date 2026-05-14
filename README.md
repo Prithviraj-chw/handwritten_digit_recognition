@@ -83,7 +83,7 @@ python train.py
 python predict.py
 ```
 
-## 🌐 Run the App *(if available)*
+## 🌐 Run the App 
 
 ```bash
 python app.py
