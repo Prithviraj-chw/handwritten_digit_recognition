@@ -15,14 +15,14 @@ import io
 import os
 import time
 
-# ─── Page Config ──────────────────────────────────────────────────────────────
+# Page Config
 st.set_page_config(
     page_title="Handwritten Digit Recognizer",
     page_icon="✏️",
     layout="wide",
 )
 
-# ─── Custom CSS ───────────────────────────────────────────────────────────────
+#Custom CSS
 st.markdown("""
 <style>
     /* Main background */
@@ -88,7 +88,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ─── Model Definition ─────────────────────────────────────────────────────────
+#Model Definition
 class DigitCNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -109,7 +109,7 @@ class DigitCNN(nn.Module):
         x = F.relu(self.fc1(x))
         return self.fc2(x)
 
-# ─── Session State Init ───────────────────────────────────────────────────────
+#Session State Init
 if "model" not in st.session_state:
     st.session_state.model = None
 if "trained" not in st.session_state:
@@ -124,17 +124,17 @@ if "test_dataset" not in st.session_state:
     st.session_state.test_dataset = None
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = "/home/claude/mnist_digit_cnn.pth"
+MODEL_PATH = "mnist_digit_cnn.pth"
 
-# ─── Data helpers ─────────────────────────────────────────────────────────────
+#Data helpers
 @st.cache_resource
 def get_datasets():
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,))
     ])
-    train_ds = datasets.MNIST(root="/home/claude/data", train=True,  transform=transform, download=True)
-    test_ds  = datasets.MNIST(root="/home/claude/data", train=False, transform=transform, download=True)
+    train_ds = datasets.MNIST(root="/tmp/data", train=True, transform=transform, download=True)
+    test_ds = datasets.MNIST(root="/tmp/data", train=False, transform=transform, download=True)
     return train_ds, test_ds
 
 def load_or_init_model():
@@ -144,7 +144,7 @@ def load_or_init_model():
         return model, True
     return model, False
 
-# ─── Sidebar ──────────────────────────────────────────────────────────────────
+#Sidebar
 with st.sidebar:
     st.markdown("## ✏️ Digit Recognizer")
     st.markdown("---")
@@ -174,7 +174,7 @@ with st.sidebar:
             st.session_state.log_lines = []
             st.rerun()
 
-# ─── Page: Home ───────────────────────────────────────────────────────────────
+# Page: Home
 if page == "🏠 Home":
     st.markdown("# Handwritten Digit Recognition")
     st.markdown("A CNN trained on MNIST — recognizes digits 0–9 from images you upload.")
@@ -212,7 +212,7 @@ if page == "🏠 Home":
 3. **Explore** — see *Sample Predictions* for MNIST test examples
         """)
 
-# ─── Page: Train ──────────────────────────────────────────────────────────────
+# Page: Train
 elif page == "🎓 Train Model":
     st.markdown("# 🎓 Train the CNN")
 
@@ -321,7 +321,7 @@ elif page == "🎓 Train Model":
         render_log()
         st.success(f"Training complete! Best accuracy: {max(st.session_state.test_accuracies):.2f}%")
 
-# ─── Page: Predict ────────────────────────────────────────────────────────────
+# Page: Predict
 elif page == "🔍 Predict":
     st.markdown("# 🔍 Predict a Digit")
 
@@ -383,7 +383,7 @@ elif page == "🔍 Predict":
             st.pyplot(fig)
             plt.close(fig)
 
-# ─── Page: Sample Predictions ─────────────────────────────────────────────────
+# Page: Sample Predictions
 elif page == "📊 Sample Predictions":
     st.markdown("# 📊 Sample MNIST Predictions")
 
